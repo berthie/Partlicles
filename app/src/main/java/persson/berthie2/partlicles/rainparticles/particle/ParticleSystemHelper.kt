@@ -1,5 +1,7 @@
 package persson.berthie2.partlicles.rainparticles.particle
 
+import kotlin.math.cos
+import kotlin.math.sin
 import kotlin.random.Random
 
 class ParticleSystemHelper(
@@ -21,6 +23,15 @@ class ParticleSystemHelper(
         val randomWidth = getRandomWidth()
         val randomHeight = getRandomHeight(randomWidth)
         val angle = computeAngle()
+
+        return Particle(
+            x = generateX(),
+            y = generateY(),
+            width = randomWidth,
+            height = randomHeight,
+            speed = Random.nextFloat() * (parameters.maxSpeed - parameters.minSpeed) + parameters.minSpeed,
+            angle = angle
+        )
     }
 
     private fun generateX(startFromSourceEdge: Boolean = false): Float {
@@ -51,6 +62,32 @@ class ParticleSystemHelper(
                 particle.y - particle.height > frameHeight ||
                         particle.y + particle.height < 0 ||
                         particle.x - particle.width > frameWidth
+            }
+        }
+    }
+
+    fun updateParticles(iteration: Long) {
+        particles.forEach { particle ->
+            if (isOutOfFrame(particle)) {
+                val randomWidth = getRandomWidth()
+                val randomHeight = getRandomHeight(randomWidth)
+                val angle = computeAngle()
+
+                particle.n = iteration
+                particle.width = randomWidth
+                particle.height = randomHeight
+                particle.x = generateX(startFromSourceEdge = true)
+                particle.y = generateY(startFromSourceEdge = true)
+                particle.speed = Random.nextFloat() * (parameters.maxSpeed - parameters.minSpeed) + parameters.minSpeed
+                particle.angle = angle
+            } else {
+                particle.n = iteration
+                particle.x = particle.x - (parameters.distancePerStep * particle.speed) * cos(
+                    Math.toRadians(particle.angle.toDouble())
+                ).toFloat()
+                particle.y = particle.y - (parameters.distancePerStep * particle.speed) * sin(
+                    Math.toRadians(particle.angle.toDouble())
+                ).toFloat()
             }
         }
     }
