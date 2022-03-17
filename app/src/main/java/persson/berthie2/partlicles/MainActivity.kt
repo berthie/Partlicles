@@ -21,7 +21,9 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.isActive
+import persson.berthie2.partlicles.rainparticles.HomeViewModel
 import persson.berthie2.partlicles.rainparticles.particle.*
 import persson.berthie2.partlicles.ui.appendIf
 import persson.berthie2.partlicles.ui.theme.PartliclesTheme
@@ -109,7 +111,8 @@ fun Particles(
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SnowFall() {
-
+    val viewModel = viewModel<HomeViewModel>()
+    val particleAnimationIteration by viewModel.particleAnimationIteration.collectAsState()
     Image(
         painter = painterResource(id = R.drawable.panjid),
         contentDescription = null,
@@ -118,7 +121,7 @@ fun SnowFall() {
 
 
     )
-    Particles(iteration = 1, parameters = rainParameters)
+    Particles(iteration = particleAnimationIteration, parameters = rainParameters)  // Animation Iteration restart, Create new file from rainparameters
 }
 
 
