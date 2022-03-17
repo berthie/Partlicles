@@ -1,5 +1,6 @@
 package persson.berthie2.partlicles
 
+import android.util.Log
 import androidx.annotation.FloatRange
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -135,6 +136,9 @@ private data class SnowfallState(
     }
 }
 
+
+
+
 private fun IntSize.randomPosition() =
     Offset(width.random().toFloat(), height.random().toFloat())
 
@@ -163,7 +167,12 @@ private class Snowflake(
     var angle by mutableStateOf(angle)
 
     fun draw(canvas: Canvas) {
-        canvas.drawCircle(center = position, radius = radius, paint = paint)
+        val currentOffsetX = position.x
+        val currentOffsetY = position.y
+        //canvas.drawCircle(center = position, radius = radius, paint = paint)
+        val lineStart = Offset(currentOffsetX,currentOffsetY)
+       val linEnd = Offset(currentOffsetX , currentOffsetY + 12f)
+        canvas.drawLine(p1 = lineStart, p2 = linEnd, paint = paint)
     }
 
     fun update(elapsedMillis: Long) {

@@ -9,9 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import persson.berthie2.partlicles.rainparticles.HomeViewModel
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -21,7 +18,7 @@ fun Particles(
     iteration: Long,
     parameters: PrecipitationParameters
 ) {
-    val infiniteTransition = rememberInfiniteTransition()
+    /*val infiniteTransition = rememberInfiniteTransition()
     val rotation by infiniteTransition.animateFloat(
         initialValue = 0f,
         targetValue = 360f,
@@ -29,7 +26,7 @@ fun Particles(
             animation = tween(1600, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
         )
-    )
+    )*/
 
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         val particleGenerator by remember {
@@ -83,7 +80,5 @@ fun Particles(
 @Preview
 @Composable
 fun ParticlesPreview() {
-    val viewModel = viewModel<HomeViewModel>()
-    val particleAnimationIteration by viewModel.particleAnimationIteration.collectAsState()
-    Particles(iteration = particleAnimationIteration, parameters = rainParameters)
+    Particles(iteration = 1, parameters = rainParameters)
 }

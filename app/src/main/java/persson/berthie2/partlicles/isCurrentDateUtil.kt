@@ -8,5 +8,5 @@ import java.time.Month
 @RequiresApi(Build.VERSION_CODES.O)
 internal fun isCurrentDateBetween(): Boolean {
     val now = LocalDate.now()
-    return now.month == Month.MARCH && now.dayOfMonth in 1..10
+    return now.month == Month.MARCH && now.dayOfMonth in 1..29
 }
